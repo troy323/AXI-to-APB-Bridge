@@ -34,12 +34,7 @@ Running the testbench yields the following clean transcript, proving successful 
 [AXI] Completed Read: Data cafebabe from Addr 00000004
 --- Simulation Complete ---
 
-## Directory Structure
 
-```text
-├── rtl/
-│   └── axi2apb_2fifo_simple_noid.v   # Top-level bridge wrapper and sub-modules
-├── tb/
-│   └── tb_axi2apb.v                  # Self-checking testbench with CDC generation
-├── README.md                         # Project documentation
-└── LICENSE                           # MIT License
+
+
+

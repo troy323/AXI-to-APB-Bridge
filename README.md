@@ -1,7 +1,6 @@
 # AXI4 to APB3 Bridge with Asynchronous CDC
 
 ![Language](https://img.shields.io/badge/Language-Verilog--2001-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Simulation_Verified-brightgreen.svg)
 
 A lightweight, fully synthesizable Verilog-2001 implementation of an **AXI4 to APB3 Bridge**. It is explicitly designed to interface high-performance, high-frequency AXI4 master devices (e.g., microprocessors, DMA controllers) with lower-frequency, low-bandwidth APB3 peripheral devices (e.g., UARTs, timers, configuration registers). 
@@ -34,11 +33,13 @@ The IP is highly parameterized to fit various SoC requirements.
 ---
 
 ## 🏗️ Architecture & Internal Data Flow
+
 1. **Write Path:** The AXI Frontend accepts Address (`AW`) and Data (`W`) channels. It calculates necessary burst addresses and pushes an encapsulated packet `{Write_Flag, Last_Flag, Address, Data}` into the **Request FIFO**. The APB Master pops this data, executes the `PENABLE`/`PSEL` setup and access phases, and pushes a response back.
 2. **Read Path:** The AXI Frontend accepts the Address (`AR`) channel, calculates the burst beats, and pushes a dummy payload with a Read Flag to the **Request FIFO**. The APB Master executes the reads on the peripheral bus and pushes the returned `PRDATA` into the **Response FIFO**. The AXI Frontend pops this data and drives the AXI `R` channel back to the master.
 
 ---
-### Simulation Output
+
+## 🔬 Simulation Output
 
 Running the testbench yields the following clean transcript, proving successful data routing and functional correctness across the asynchronous boundary:
 
@@ -53,17 +54,3 @@ Running the testbench yields the following clean transcript, proving successful 
 [APB] Read Data: cafebabe from Addr: 00000004
 [AXI] Completed Read: Data cafebabe from Addr 00000004
 --- Simulation Complete ---
-
-
-
----
-
-## 📂 Directory Structure
-
-```text
-├── rtl/
-│   └── axi2apb_2fifo_simple_noid.v   # Top-level bridge wrapper and sub-modules
-├── tb/
-│   └── tb_axi2apb_waveform.v         # Self-checking testbench with CDC generation
-├── README.md                         # Project documentation
-└── LICENSE                           # MIT License

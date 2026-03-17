@@ -18,6 +18,22 @@ To ensure safe data transfer between independent clock networks, the bridge arch
 1. **Write Path:** The AXI Frontend accepts Address (`AW`) and Data (`W`) channels. It calculates the necessary burst addresses and pushes an encapsulated packet `{Write_Flag, Last_Flag, Address, Data}` into the **Request FIFO**. The APB Master pops this data, executes the `PENABLE`/`PSEL` setup and access phases, and pushes a response back.
 2. **Read Path:** The AXI Frontend accepts the Address (`AR`) channel, calculates the burst beats, and pushes dummy data with a Read Flag to the **Request FIFO**. The APB Master executes the reads on the peripheral bus and pushes the returned `PRDATA` into the **Response FIFO**. The AXI Frontend pops this data and drives the AXI `R` channel back to the master.
 
+ ### Simulation Output
+
+Running the testbench yields the following clean transcript, proving successful data routing and functional correctness across the bridge:
+
+```text
+--- Starting Single Transfer Tests ---
+[APB] Wrote Data: deadbeef to Addr: 00000000
+[AXI] Completed Write: Data deadbeef to Addr 00000000
+[APB] Wrote Data: cafebabe to Addr: 00000004
+[AXI] Completed Write: Data cafebabe to Addr 00000004
+[APB] Read Data: deadbeef from Addr: 00000000
+[AXI] Completed Read: Data deadbeef from Addr 00000000
+[APB] Read Data: cafebabe from Addr: 00000004
+[AXI] Completed Read: Data cafebabe from Addr 00000004
+--- Simulation Complete ---
+
 ## Directory Structure
 
 ```text

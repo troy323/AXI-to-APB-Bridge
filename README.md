@@ -34,8 +34,6 @@ The IP is highly parameterized to fit various SoC requirements.
 ---
 
 ## 🏗️ Architecture & Internal Data Flow
-
-*(Note: Insert a block diagram here showing the AXI Frontend, FIFOs, and APB Master)*
 1. **Write Path:** The AXI Frontend accepts Address (`AW`) and Data (`W`) channels. It calculates necessary burst addresses and pushes an encapsulated packet `{Write_Flag, Last_Flag, Address, Data}` into the **Request FIFO**. The APB Master pops this data, executes the `PENABLE`/`PSEL` setup and access phases, and pushes a response back.
 2. **Read Path:** The AXI Frontend accepts the Address (`AR`) channel, calculates the burst beats, and pushes a dummy payload with a Read Flag to the **Request FIFO**. The APB Master executes the reads on the peripheral bus and pushes the returned `PRDATA` into the **Response FIFO**. The AXI Frontend pops this data and drives the AXI `R` channel back to the master.
 
